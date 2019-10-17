@@ -1,0 +1,14 @@
+{% extends 'main.html' %}
+
+{% block title %}<title>{{Articles.title}}</title>{% endblock %}
+
+{% block content %}
+    {% for item in Articles %}
+        <h2 align="center">{{ item.title }}</h2><br />
+        <br /><p>Written by - {{ item.author.username }}</p>
+        <p> Published: {{item.created_date|date:"Y:n:j  G:i"}}</p>
+        <p>{{ item.content }}</p>
+    {% endfor %}
+    <p align="center"><a href="{% url 'information' %}">Back</a></p>
+{% endblock %}
+
