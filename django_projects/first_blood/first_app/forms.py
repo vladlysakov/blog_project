@@ -19,5 +19,4 @@ class UpdateInfoForm(ModelForm):
     class Meta:
         model = User_Profile
         fields = ('username', 'first_name',
-                  'last_name', 'email',
-                  'password', 'age')
+                  'last_name', 'email', 'age')

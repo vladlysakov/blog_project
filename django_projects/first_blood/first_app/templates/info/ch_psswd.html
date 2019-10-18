@@ -1,0 +1,15 @@
+{% extends 'main.html' %}
+
+{% block title %}<title>Change password</title>{% endblock %}
+
+{% block content %}
+<h1 align="center">Create new password</h1>
+<form method="post">
+    {% csrf_token %}
+    {% for item in form %}
+        <p align="center">{{ item.label_tag }}</p>
+        <p align="center">{{ item }}</p>
+    {% endfor %}
+        <p align="center"><button type="submit">Change password</button></p>
+</form>
+{% endblock %}

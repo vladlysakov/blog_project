@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.views.generic import UpdateView
@@ -75,3 +75,16 @@ class UserInfoUpdateView(UpdateView):
 
     def form_valid(self, form):
         return super().form_valid(form)
+
+
+def PostEditView(request, pk):
+    post = get_object_or_404(Article, id=pk)
+    if request.method == "POST":
+        form = AddArticleForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save()
+            post.save()
+            return redirect('information')
+    else:
+        form = AddArticleForm(instance=post)
+    return render(request, 'articles/edit_article.html',{'form': form} )
