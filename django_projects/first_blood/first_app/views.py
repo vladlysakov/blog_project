@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
+from django.http import HttpResponseForbidden
 from django.views.generic.edit import CreateView
 from django.views.generic import UpdateView
 from django.template.response import TemplateResponse
@@ -76,15 +77,20 @@ class UserInfoUpdateView(UpdateView):
     def form_valid(self, form):
         return super().form_valid(form)
 
-
+@login_required
 def PostEditView(request, pk):
     post = get_object_or_404(Article, id=pk)
+    print(request.user)
+    print(post.author.username)
     if request.method == "POST":
-        form = AddArticleForm(request.POST, instance=post)
-        if form.is_valid():
-            post = form.save()
-            post.save()
-            return redirect('information')
+        if post.author != request.user:
+            return HttpResponseForbidden("You don't have permission")
+        else:
+            form = AddArticleForm(request.POST, instance=post)
+            if form.is_valid():
+                post = form.save()
+                post.save()
+                return redirect('information')
     else:
         form = AddArticleForm(instance=post)
     return render(request, 'articles/edit_article.html',{'form': form} )
