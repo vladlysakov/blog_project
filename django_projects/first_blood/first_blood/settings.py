@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sslserver',
     'first_app.apps.FirstAppConfig',
+    'axes',
 ]
 
 MIDDLEWARE = [
@@ -50,7 +50,27 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
+
+#Django-axes configurations
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        },
+    'axes': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        'LOCATION': '127.0.0.1:11211',
+        }
+}
+
+
+AXES_CACHE = 'axes'
+SILENCED_SYSTEM_CHECKS = ['axes.W003']
+AXES_ONLY_USER_FAILURES = True
+AXES_COOLOFF_TIME = 1
+AXES_LOCKOUT_TEMPLATE = 'registration/block_user.html'
 
 ROOT_URLCONF = 'first_blood.urls'
 AUTH_USER_MODEL = 'first_app.User_Profile'
@@ -71,12 +91,12 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'first_blood.wsgi.application'
 
 LOGIN_URL = 'main_page'
 LOGIN_REDIRECT_URL = 'main_page'
 LOGOUT_REDIRECT_URL = 'main_page'
-#SECURE_SSL_REDIRECT=True
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -91,6 +111,7 @@ DATABASES = {
         'PORT': 5432,
     }
 }
+
 
 
 # Password validation

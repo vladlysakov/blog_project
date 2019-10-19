@@ -84,7 +84,7 @@ def PostEditView(request, pk):
     print(post.author.username)
     if request.method == "POST":
         if post.author != request.user:
-            return HttpResponseForbidden("You don't have permission")
+            return HttpResponseForbidden("You don't have permition")
         else:
             form = AddArticleForm(request.POST, instance=post)
             if form.is_valid():
