@@ -16,6 +16,7 @@ class RegistrationUserView(CreateView):
     success_url = reverse_lazy('main_page')
     template_name ='add/register_per.html'
 
+    
 @login_required
 def SuccessRegistrationView(request):
     return TemplateResponse(request, 'add/registered_per.html')
@@ -77,11 +78,10 @@ class UserInfoUpdateView(UpdateView):
     def form_valid(self, form):
         return super().form_valid(form)
 
+    
 @login_required
 def PostEditView(request, pk):
     post = get_object_or_404(Article, id=pk)
-    print(request.user)
-    print(post.author.username)
     if request.method == "POST":
         if post.author != request.user:
             return HttpResponseForbidden("You don't have permition")
