@@ -35,7 +35,6 @@ def InfoAboutUser(request):
 class AddArticleView(CreateView):
     template_name = 'articles/adding_articles.html'
     form_class = AddArticleForm
-    success_url = reverse_lazy('main_page')
 
     def post(self, request, *args, **kwargs):
         form = AddArticleForm(request.POST)
@@ -84,7 +83,7 @@ def PostEditView(request, pk):
     post = get_object_or_404(Article, id=pk)
     if request.method == "POST":
         if post.author != request.user:
-            return HttpResponseForbidden("You don't have permition")
+            return HttpResponseForbidden("You don't have permission")
         else:
             form = AddArticleForm(request.POST, instance=post)
             if form.is_valid():
