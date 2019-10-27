@@ -28,7 +28,6 @@ class Article(models.Model):
     
 class User_Profile(AbstractUser):
     age = models.PositiveSmallIntegerField(null=True, verbose_name='Age')
-    session_time = models.DateTimeField(null=True, verbose_name='Active time')
     logout_time = models.DateTimeField(null=True, verbose_name='Last logout')
     time_last_logout = models.DurationField(null=True)
     

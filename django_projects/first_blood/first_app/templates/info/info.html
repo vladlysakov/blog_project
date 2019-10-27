@@ -19,10 +19,14 @@
         Your full name: {{ user.get_full_name }}<br />
         Last login: {{ user.last_login }}<br />
         Date joined: {{ user.date_joined }}<br />
-        The accoutn was active: {{ user.time_last_logout|duration }} ago<br />
-        <a href="{% url 'user_articles' user.get_username %}">My articles</a></p>
-        
+        {% if user.time_last_logout|duration == "You've just registered" %}
+            {{user.time_last_logout|duration}}<br />
+        {% else %}
+            The account was active: {{ user.time_last_logout|duration }} ago<br />
+        {% endif %}
 
+        <a href="{% url 'user_articles' user.get_username %}">My articles</a></p>
+    
     <a href="{% url 'logout' %}">Logout</a>
     
 {% endblock %}
