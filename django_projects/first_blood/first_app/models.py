@@ -29,7 +29,7 @@ class Article(models.Model):
 class User_Profile(AbstractUser):
     age = models.PositiveSmallIntegerField(null=True, verbose_name='Age')
     logout_time = models.DateTimeField(null=True, verbose_name='Last logout')
-    time_last_logout = models.DurationField(null=True)
+    phone = models.CharField(max_length=12, default="")
     
 
     class Meta:
@@ -37,18 +37,9 @@ class User_Profile(AbstractUser):
         verbose_name = 'Person'
 
 
-    @receiver(user_logged_out)  #Both methods(@receiver) calculate last login time 
+    @receiver(user_logged_out)
     def get_time(sender, user, request, **kwargs):
         try:
             sender.objects.filter(pk=user.pk).update(logout_time=now())
         except sender.DoesNotExist:
-            return None
-
-    @receiver(user_logged_in)
-    def get_session_time(sender, user, request, **kwargs):
-        try:
-            print(request.user.last_login)
-            diff_time = now() - user.logout_time
-            sender.objects.filter(pk=user.pk).update(time_last_logout=diff_time)
-        except (sender.DoesNotExist, TypeError):
             return None

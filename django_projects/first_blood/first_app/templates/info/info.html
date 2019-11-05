@@ -1,5 +1,5 @@
 {% extends 'main.html' %}
-{% load duration_filter %}
+
 
 {% block title %}<title> Info about {{user.username}}</title>{% endblock %}
 
@@ -19,12 +19,9 @@
         Your full name: {{ user.get_full_name }}<br />
         Last login: {{ user.last_login }}<br />
         Date joined: {{ user.date_joined }}<br />
-        {% if user.time_last_logout|duration == "You've just registered" %}
-            {{user.time_last_logout|duration}}<br />
-        {% else %}
-            The account was active: {{ user.time_last_logout|duration }} ago<br />
+        {% if user.logout_time != None %}
+             The account was active: {{ user.logout_time|timesince:c_time }} ago<br />   
         {% endif %}
-
         <a href="{% url 'user_articles' user.get_username %}">My articles</a></p>
     
     <a href="{% url 'logout' %}">Logout</a>

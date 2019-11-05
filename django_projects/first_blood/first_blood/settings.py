@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from authy.api import AuthyApiClient
+import datetime
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$i(7d53_fgq2=gt@rshbj!dj-il00mx^-xy11&*ivp4%%13aei'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -50,8 +53,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'axes.middleware.AxesMiddleware',
 ]
+
+
+ACCOUNT_SECURITY_API_KEY = ''
+authy_api = AuthyApiClient(ACCOUNT_SECURITY_API_KEY)
+country_code_twilio = ''
+
 
 #Django-axes configurations
 
@@ -69,9 +79,9 @@ AXES_USE_USER_AGENT =True
 AXES_LOCK_OUT_AT_FAILURE =True
 AXES_CACHE = 'axes'
 SILENCED_SYSTEM_CHECKS = ['axes.W003']
-#AXES_ONLY_USER_FAILURES = True
-AXES_COOLOFF_TIME = 1
+AXES_COOLOFF_TIME = datetime.timedelta(minutes=5)
 AXES_LOCKOUT_TEMPLATE = 'registration/block_user.html'
+
 
 ROOT_URLCONF = 'first_blood.urls'
 AUTH_USER_MODEL = 'first_app.User_Profile'
@@ -99,6 +109,7 @@ LOGIN_URL = 'main_page'
 LOGIN_REDIRECT_URL = 'main_page'
 LOGOUT_REDIRECT_URL = 'main_page'
 
+
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -112,6 +123,7 @@ DATABASES = {
         'PORT': 5432,
     }
 }
+
 
 
 

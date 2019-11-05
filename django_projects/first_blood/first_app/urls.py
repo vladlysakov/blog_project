@@ -14,24 +14,25 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from django.urls import path
-from django.urls import reverse_lazy
+from django.urls import path, reverse_lazy
 from django.contrib.auth import views as auth_views
 from django.template.response import TemplateResponse
 from axes import decorators
+
 from .views import (
     RegistrationUserView, SuccessRegistrationView,
     MainPageView, InfoAboutUser, AddArticleView,
     DisplayAllArticlesView, DisplayArticlesByUser,
-    UserInfoUpdateView, 
-    PostEditView,
+    UserInfoUpdateView, PostEditView, CustomLoginView,
+    CheckPinView,
     )
 
 
 urlpatterns = [
     path('blog/', MainPageView, name='main_page'),
     path('blog/user/', InfoAboutUser, name='information'),
-    path('login/', decorators.axes_dispatch(auth_views.LoginView.as_view()), name='login'),
+    path('login/', decorators.axes_dispatch(CustomLoginView.as_view()), name='login'),
+    path('login/code-authenticate/', CheckPinView.as_view(), name='verify'),
     path('blog/user/add_articles/', AddArticleView.as_view(), name='add_article'),
     path('blog/user/edit/', UserInfoUpdateView.as_view(), name='edit_info'),
     path('blog/user/change_password/', auth_views.PasswordChangeView.as_view(template_name='info/ch_psswd.html',
