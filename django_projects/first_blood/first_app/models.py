@@ -10,8 +10,7 @@ class Article(models.Model):
     title = models.CharField(max_length=30, verbose_name='title')
     topic = models.CharField(max_length=20, verbose_name='topic', blank=True)
     content = models.TextField(verbose_name='content')
-    created_date = models.DateTimeField(auto_now_add=True,
-                                        verbose_name='creation date')
+    created_date = models.DateTimeField(auto_now_add=True, verbose_name='creation date')
 
     def __str__(self):
         return self.title

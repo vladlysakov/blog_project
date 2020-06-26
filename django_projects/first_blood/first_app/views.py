@@ -71,6 +71,7 @@ class CustomLoginView(View):
                     return HttpResponseBadRequest('Sorry! Some troubles with number!')
                 else:
                     self.request.session['auth_user'] = username
+
                     return redirect('verify')
         else:
             form = AuthenticationForm()

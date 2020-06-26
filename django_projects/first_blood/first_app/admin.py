@@ -3,6 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from .models import User_Profile
 from .forms import UserForm
 
+
 class UsersAdmin(UserAdmin):
     add_form = UserForm
     list_display = ('username', 'email', 'last_login')
@@ -13,4 +14,3 @@ class UsersAdmin(UserAdmin):
 
 
 admin.site.register(User_Profile, UsersAdmin)
-
