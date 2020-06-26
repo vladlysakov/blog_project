@@ -1,0 +1,25 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <div class="row justify-content-md-center">
+        <form class="registration-form" method="post" action="{% url 'add_article' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="Title">Title</label>
+                <input type="text" class="form-control" id="Title" placeholder="Title" name="title">
+            </div>
+            <div class="form-group">
+                <label for="Title">Topic</label>
+                <input type="text" class="form-control" id="Topic" placeholder="Topic" name="topic">
+            </div>
+
+            <div class="input-group">
+                <textarea
+                        class="form-control" aria-label="With textarea" placeholder="Type some text..."
+                        style="width: 400px; height: 300px; margin-bottom: 10px;" name="content"></textarea>
+              </div>
+                <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+    </div>
+
+{% endblock %}

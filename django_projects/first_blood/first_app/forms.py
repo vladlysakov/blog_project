@@ -5,16 +5,18 @@ from .models import User_Profile, Article
 
 
 class PinForm(forms.Form):
-        pin =  forms.CharField(max_length=10)
+    pin = forms.CharField(max_length=10)
 
-    
+
 class UserForm(UserCreationForm):
     class Meta:
         model = User_Profile
-        fields  = ('username', 'age', 'phone')
+        fields = ('username', 'age', 'phone')
 
-        
+
 class AddArticleForm(ModelForm):
+    topic = forms.CharField(required=False)
+
     class Meta:
         model = Article
         fields = ('title', 'topic', 'content')
@@ -23,8 +25,4 @@ class AddArticleForm(ModelForm):
 class UpdateInfoForm(ModelForm):
     class Meta:
         model = User_Profile
-        fields = ('username', 'first_name',
-                  'last_name', 'email', 'age',
-                  'phone',)
-
-
+        fields = ('username', 'first_name', 'last_name', 'email', 'age', 'phone')

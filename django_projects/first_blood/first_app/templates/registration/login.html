@@ -1,20 +1,21 @@
 {% extends 'main.html' %}
 
-{% block title %}<title>Login</title>{% endblock %}
-
 {% block content %}
-    <div>
-        <h1 align="center">Hello</h1>
-        <form method="post">
-            {% csrf_token %}
-            {% for field in form %}
-                <p align="center">
-                {{ field.label_tag }}
-                {{ field }}</p>
-            {% endfor %}
-            
-            <p align="center"><button type="submit">Login</button></p>
-        </form>
-    </div>
+    {% if user.is_authenticated %}
+        <meta http-equiv="refresh" content="0;URL={% url 'main_page' %}" />
+    {% endif %}
+<div class="row justify-content-md-center">
+    <form class="registration-form" method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" placeholder="Username" name="username">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>
 {% endblock %}
-         
