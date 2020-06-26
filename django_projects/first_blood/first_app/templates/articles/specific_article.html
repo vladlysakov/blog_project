@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    {% for item in articles %}
+
+<div class="row justify-content-md-center">
+        <div class="main-article">
+            <div class="col-lg-6 article-header">
+                {{ item.title }}
+                <hr>
+            </div>
+            <div class="col-lg-12" style="height:350px;">
+                {{ item.content }}
+            </div>
+            <hr>
+            <div class="col-lg-6 author">
+                {{ item.author.username }} - {{item.created_date|date:"Y:n:j  G:i"}}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

@@ -10,11 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+import datetime
 import os
+
+from authy.api import AuthyApiClient
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -26,8 +28,6 @@ SECRET_KEY = '$i(7d53_fgq2=gt@rshbj!dj-il00mx^-xy11&*ivp4%%13aei'
 DEBUG = True
 
 ALLOWED_HOSTS = ['0.0.0.0', '192.168.1.99']
-
-
 
 # Application definition
 
@@ -50,27 +50,31 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'axes.middleware.AxesMiddleware',
 ]
 
-#Django-axes configurations
+ACCOUNT_SECURITY_API_KEY = ''
+authy_api = AuthyApiClient(ACCOUNT_SECURITY_API_KEY)
+country_code_twilio = ''
+
+# Django-axes configurations
 
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        },
+    },
     'axes': {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         'LOCATION': '127.0.0.1:11211',
-        }
+    }
 }
 
-AXES_USE_USER_AGENT =True
-AXES_LOCK_OUT_AT_FAILURE =True
+AXES_USE_USER_AGENT = True
+AXES_LOCK_OUT_AT_FAILURE = True
 AXES_CACHE = 'axes'
 SILENCED_SYSTEM_CHECKS = ['axes.W003']
-#AXES_ONLY_USER_FAILURES = True
-AXES_COOLOFF_TIME = 1
+AXES_COOLOFF_TIME = datetime.timedelta(minutes=5)
 AXES_LOCKOUT_TEMPLATE = 'registration/block_user.html'
 
 ROOT_URLCONF = 'first_blood.urls'
@@ -92,7 +96,6 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = 'first_blood.wsgi.application'
 
 LOGIN_URL = 'main_page'
@@ -106,14 +109,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'localbase',
-        'USER': 'vlad',
-        'PASSWORD': 'Qweasdzxc12345',
+        'USER': 'postgres',
+        'PASSWORD': '1',
         'HOST': 'localhost',
         'PORT': 5432,
     }
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -133,7 +134,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -146,7 +146,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

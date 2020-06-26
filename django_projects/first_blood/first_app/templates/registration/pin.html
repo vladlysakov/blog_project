@@ -1,0 +1,13 @@
+{% extends 'main.html' %}
+{% block content %}
+<div class="row justify-content-md-center">
+    <form class="registration-form" method="post" action="{% url 'verify' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="Pincode">Pincode</label>
+            <input type="password" class="form-control" id="Pincode" placeholder="Pincode" name="pin">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}
